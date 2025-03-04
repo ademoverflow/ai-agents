@@ -1,8 +1,17 @@
 import json
 import os
+from typing import TypedDict
 
 import requests
 from langchain.tools import tool
+
+
+class SearchResult(TypedDict):
+    """Search Result."""
+
+    title: str
+    link: str
+    snippet: str
 
 
 class SearchTools:
@@ -10,21 +19,21 @@ class SearchTools:
 
     @staticmethod
     @tool("Search internet")
-    def search_internet(query: str) -> str:
+    def search_internet(query: str) -> list[SearchResult]:
         """Search the internet for a given query and return relevant results.
 
         Args:
             query (str): Query string
 
         Returns:
-            str: Search results
+            list[SearchResult]: Search results
 
         """
         return SearchTools.search(query)
 
     @staticmethod
     @tool("Search Amazon UAE")
-    def search_amazon_uae(query: str) -> str:
+    def search_amazon_uae(query: str) -> list[SearchResult]:
         """Search Amazon UAE for a given query and return relevant results.
 
         Args:
@@ -39,21 +48,21 @@ class SearchTools:
 
     @staticmethod
     @tool("Search AliBaba")
-    def search_alibaba(query: str) -> str:
+    def search_alibaba(query: str) -> list[SearchResult]:
         """Search AliBaba for a given query and return relevant results.
 
         Args:
             query (str): Query string
 
         Returns:
-            str: Search results
+            list[SearchResult]: Search results
 
         """
         query = f"site:alibaba.com {query}"
         return SearchTools.search(query)
 
     @staticmethod
-    def search(query: str, n_results: int = 5) -> str:
+    def search(query: str, n_results: int = 5) -> list[SearchResult]:
         """Search the internet for a given query and return relevant results.
 
         Args:
@@ -61,7 +70,7 @@ class SearchTools:
             n_results (int, optional): Number of results to return. Defaults to 5.
 
         Returns:
-            str: Search results
+            list[SearchResult]: Search results
 
         """
         url = "https://google.serper.dev/search"
@@ -71,22 +80,12 @@ class SearchTools:
             "content-type": "application/json",
         }
         response = requests.request("POST", url, headers=headers, data=payload, timeout=10)
-        results = response.json()["organic"]
-        text = []
-        for result in results[:n_results]:
-            try:
-                text.append(
-                    "\n".join(
-                        [
-                            f"Title: {result['title']}",
-                            f"Link: {result['link']}",
-                            f"Snippet: {result['snippet']}",
-                            "\n-----------------",
-                        ],
-                    ),
-                )
-            except KeyError:
-                continue
-
-        content = "\n".join(text)
-        return f"\nSearch result: {content}\n"
+        raw_results = response.json()["organic"]
+        return [
+            SearchResult(
+                title=result["title"],
+                link=result["link"],
+                snippet=result["snippet"],
+            )
+            for result in raw_results[:n_results]
+        ]
