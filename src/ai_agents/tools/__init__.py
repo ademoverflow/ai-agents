@@ -38,6 +38,21 @@ class SearchTools:
         return SearchTools.search(query)
 
     @staticmethod
+    @tool("Search AliBaba")
+    def search_alibaba(query: str) -> str:
+        """Search AliBaba for a given query and return relevant results.
+
+        Args:
+            query (str): Query string
+
+        Returns:
+            str: Search results
+
+        """
+        query = f"site:alibaba.com {query}"
+        return SearchTools.search(query)
+
+    @staticmethod
     def search(query: str, n_results: int = 5) -> str:
         """Search the internet for a given query and return relevant results.
 
