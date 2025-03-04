@@ -7,9 +7,7 @@ authors = [
     { name = "Adem Usta", email = "mr.usta.adem@gmail.com" }
 ]
 requires-python = ">=3.13"
-dependencies = [
-    "ruff>=0.9.9",
-]
+dependencies = []
 
 [project.scripts]
 ai-agents = "ai_agents:main"
@@ -17,3 +15,8 @@ ai-agents = "ai_agents:main"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.9.9",
+]

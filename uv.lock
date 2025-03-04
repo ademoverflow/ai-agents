@@ -6,12 +6,16 @@ requires-python = ">=3.13"
 name = "ai-agents"
 version = "0.1.0"
 source = { editable = "." }
-dependencies = [
+
+[package.dev-dependencies]
+dev = [
     { name = "ruff" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "ruff", specifier = ">=0.9.9" }]
+
+[package.metadata.requires-dev]
+dev = [{ name = "ruff", specifier = ">=0.9.9" }]
 
 [[package]]
 name = "ruff"
