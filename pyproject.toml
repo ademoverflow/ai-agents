@@ -2,6 +2,7 @@
 authors = [{ name = "Adem Usta", email = "mr.usta.adem@gmail.com" }]
 dependencies = [
     "crewai>=0.102.0",
+    "langchain>=0.3.19",
 ]
 description = "Add your description here"
 name = "ai-agents"
