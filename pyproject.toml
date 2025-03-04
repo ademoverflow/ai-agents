@@ -1,6 +1,8 @@
 [project]
 authors = [{ name = "Adem Usta", email = "mr.usta.adem@gmail.com" }]
-dependencies = []
+dependencies = [
+    "crewai>=0.102.0",
+]
 description = "Add your description here"
 name = "ai-agents"
 readme = "README.md"
