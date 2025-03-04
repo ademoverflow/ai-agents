@@ -18,5 +18,28 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
+    "jupyter>=1.1.1",
+    "mypy>=1.15.0",
     "ruff>=0.9.9",
 ]
+
+[tool.ruff]
+line-length = 100
+indent-width = 4
+exclude = [".venv"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[tool.ruff.lint]
+ignore = []
+select = ["ALL"]
+
+[tool.mypy]
+disallow_untyped_defs = true
+mypy_path = "stubs"
+ignore_missing_imports = false
+pretty = true
+show_column_numbers = true
